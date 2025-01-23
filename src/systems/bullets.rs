@@ -1,12 +1,12 @@
 use bevy::prelude::{Commands, Entity, Query, Res, Sprite, Time, Transform};
 use bevy::asset::AssetServer;
 use crate::components::{Bullet, BulletState};
-use crate::constants::{EXPLOSION_SPRITE_01_PATH, EXPLOSION_SPRITE_02_PATH, EXPLOSION_SPRITE_03_PATH, EXPLOSION_SPRITE_04_PATH};
+use crate::constants::{BULLET_VELOCITY, EXPLOSION_SPRITE_01_PATH, EXPLOSION_SPRITE_02_PATH, EXPLOSION_SPRITE_03_PATH, EXPLOSION_SPRITE_04_PATH};
 
 pub fn move_bullets(mut bullet_query: Query<(&mut Transform, &mut Bullet)>, time: Res<Time>) {
     for (mut position, mut bullet) in bullet_query.iter_mut() {
         if position.translation.y < bullet.reach.into() {
-            position.translation.y += 100. * time.delta_secs();
+            position.translation.y += BULLET_VELOCITY * time.delta_secs();
         } else {
             bullet.timer.tick(time.delta());
             if bullet.timer.finished() {

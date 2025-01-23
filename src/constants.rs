@@ -7,6 +7,7 @@ pub const EXPLOSION_SPRITE_02_PATH: &str = "pixelshmup/Tiles/tile_0005.png";
 pub const EXPLOSION_SPRITE_03_PATH: &str = "pixelshmup/Tiles/tile_0007.png";
 pub const EXPLOSION_SPRITE_04_PATH: &str = "pixelshmup/Tiles/tile_0008.png";
 pub const BULLET_COUNT_SPRITE_PATH: &str = "pixelshmup/Tiles/tile_0002.png";
+pub const BULLET_VELOCITY: f32 = 150.;
 pub const PLAYER_VELOCITY: f32 = 100.;
 pub const PLAYER_STARTING_POSITION: Vec3 = Vec3::new(0., -200., 0.);
 pub const SPRITE_SCALE: f32 = 2.;
@@ -22,3 +23,8 @@ pub const NUMBER_SPRITES: (&str,&str,&str,&str,&str,&str,&str,&str,&str,&str,) =
 "pixelshmup/Tiles/tile_0033.png",
 "pixelshmup/Tiles/tile_0034.png",
 "pixelshmup/Tiles/tile_0035.png",);
+
+pub const ENEMY_SPRITE_PATH: &str = "pixelshmup/Ships/ship_0002.png";
+pub const ENEMY_STARTING_POSITION: Vec3 = Vec3::new(0., 200., 0.);
+pub const ENEMY_MAX_COUNT: i8 = 13;
+pub const ENEMY_VELOCITY: f32 = 50.;
