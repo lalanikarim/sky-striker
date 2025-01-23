@@ -5,6 +5,7 @@ mod systems;
 use bevy::prelude::*;
 use systems::*;
 use components::*;
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -22,6 +23,8 @@ fn main() {
                 display_score,
                 display_bullet_count,
                 move_enemies,
+                spawn_enemy_bullets,
+                move_enemy_bullets,
             ),
         )
         .run();

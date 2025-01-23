@@ -28,3 +28,4 @@ pub const ENEMY_SPRITE_PATH: &str = "pixelshmup/Ships/ship_0002.png";
 pub const ENEMY_STARTING_POSITION: Vec3 = Vec3::new(0., 200., 0.);
 pub const ENEMY_MAX_COUNT: i8 = 13;
 pub const ENEMY_VELOCITY: f32 = 50.;
+pub const ENEMY_BULLET_RESPAWN_DURATION: f32 = 3.;
