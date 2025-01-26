@@ -3,7 +3,7 @@ use bevy::math::{Quat, Vec3};
 use bevy::prelude::{AssetServer, Commands, Query, Res, Time, Transform};
 use bevy::sprite::Sprite;
 use rand::random;
-use crate::components::{Enemy, EnemyBullet};
+use crate::components::{Bullet, BulletType, Enemy};
 use crate::constants::{BULLET_SPRITE_PATH, ENEMY_MAX_COUNT, ENEMY_SPRITE_PATH, ENEMY_STARTING_POSITION, ENEMY_VELOCITY, SPRITE_SCALE};
 
 pub fn move_enemies(mut enemy_query: Query<(&mut Transform, &mut Enemy)>, time: Res<Time>) {
@@ -31,7 +31,7 @@ pub fn spawn_enemy_bullets(mut commands: Commands, mut enemy_query: Query<(&Tran
                     rotation: Quat::from_rotation_z(180. * PI / 4.),
                     ..Default::default()
                 },
-                EnemyBullet
+                Bullet::fire(BulletType::Enemy)
             ));
         }
         if enemy.first_bullet_timer.finished() {

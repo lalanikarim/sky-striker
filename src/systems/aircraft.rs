@@ -2,14 +2,14 @@ use bevy::prelude::{Commands, EventReader, KeyCode, Res, Single, Sprite, Time, T
 use bevy::input::keyboard::KeyboardInput;
 use bevy::math::Vec3;
 use bevy::asset::AssetServer;
-use crate::components::{Bullet, Player};
+use crate::components::{Bullet, BulletType, Player};
 use crate::constants::{BULLET_SPRITE_PATH, MAGAZINE_CAPACITY, PLAYER_STARTING_POSITION, PLAYER_VELOCITY};
 
 pub fn steer_aircraft(
-    player_query: Single<&mut Player>,
+    player_query: Single<(&Transform, &mut Player)>,
     mut char_input_events: EventReader<KeyboardInput>,
 ) {
-    let mut player = player_query.into_inner();
+    let (transform, mut player) = player_query.into_inner();
     for event in char_input_events.read() {
         if event.state.is_pressed() {
             let direction: f32 = match event.key_code {
@@ -18,7 +18,7 @@ pub fn steer_aircraft(
                 _ => 0.0,
             };
             if direction != 0. {
-                let new_position = player.target_position + (direction * PLAYER_VELOCITY);
+                let new_position = transform.translation.x + (direction * PLAYER_VELOCITY);
                 if new_position >= -500. && new_position <= 500. {
                     player.target_position = new_position;
                 }
@@ -54,7 +54,7 @@ pub fn shoot_bullets(
                 commands.spawn((
                     Sprite::from_image(asset_server.load(BULLET_SPRITE_PATH)),
                     transform,
-                    Bullet::default(),
+                    Bullet::fire(BulletType::Player),
                 ));
             }
         }

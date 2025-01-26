@@ -19,7 +19,7 @@ impl Enemy {
             center,
             direction,
             bullet_timer: Timer::from_seconds(ENEMY_BULLET_RESPAWN_DURATION, TimerMode::Repeating),
-            first_bullet_timer: Timer::from_seconds(random::<f32>().abs() % 3., TimerMode::Once),
+            first_bullet_timer: Timer::from_seconds(random::<f32>().abs() * 5., TimerMode::Once),
         }
     }
 }

@@ -24,7 +24,7 @@ fn main() {
                 display_bullet_count,
                 move_enemies,
                 spawn_enemy_bullets,
-                move_enemy_bullets,
+                // move_enemy_bullets,
             ),
         )
         .run();
