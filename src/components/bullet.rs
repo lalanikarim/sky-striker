@@ -2,6 +2,7 @@ use bevy::prelude::{Component, Timer, TimerMode};
 use rand::random;
 use crate::constants::PLAYER_STARTING_POSITION;
 
+#[derive(Eq, PartialEq, Debug)]
 pub enum BulletState {
     Fired,
     Igniting,
@@ -11,7 +12,7 @@ pub enum BulletState {
     Despawn,
 }
 
-#[derive(Eq, Hash, PartialEq)]
+#[derive(Eq, Hash, PartialEq, Debug)]
 pub enum BulletType {
     Player,
     Enemy

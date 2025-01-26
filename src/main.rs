@@ -25,6 +25,7 @@ fn main() {
                 move_enemies,
                 spawn_enemy_bullets,
                 // move_enemy_bullets,
+                check_collisions,
             ),
         )
         .run();
