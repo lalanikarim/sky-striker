@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, Entity, Query, Res, Single, Sprite, Transform};
+use bevy::prelude::{Commands, Entity, Query, Res, Single, Sprite, Text2d, Transform};
 use bevy::asset::AssetServer;
 use bevy::hierarchy::BuildChildren;
 use crate::components::{BulletCount, Player, ScoreBoard};
@@ -29,6 +29,8 @@ pub fn display_bullet_count(mut commands: Commands, player_query: Single<&Player
     }
 }
 
-pub fn display_score(score_query: Single<&mut ScoreBoard>) {
-    let score_board = score_query.into_inner();
+pub fn display_score(mut score_query: Single<(&ScoreBoard, &mut Text2d)>,
+) {
+    let (score, mut text) = score_query.into_inner();
+    text.0 = score.0.to_string();
 }
