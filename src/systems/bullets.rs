@@ -55,9 +55,9 @@ pub fn animate_bullets(
 
 pub fn check_collisions(mut commands: Commands,
                         mut bullet_query: Query<(&mut Bullet, &Transform)>,
-                        mut player_query: Single<(Entity, &Transform, &Sprite, &mut Player)>,
+                        player_query: Single<(Entity, &Transform, &Sprite, &mut Player)>,
                         mut enemy_query: Query<(Entity, &Transform, &Sprite), With<Enemy>>,
-                        mut score_query: Single<&mut ScoreBoard>,
+                        score_query: Single<&mut ScoreBoard>,
                         assets: Res<Assets<Image>>,
 ) {
     let (player_entity, player_position, player_image, mut player) = player_query.into_inner();

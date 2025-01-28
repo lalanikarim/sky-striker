@@ -4,7 +4,6 @@ mod systems;
 
 use bevy::prelude::*;
 use systems::*;
-use components::*;
 
 fn main() {
     App::new()

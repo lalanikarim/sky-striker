@@ -29,7 +29,7 @@ pub fn display_bullet_count(mut commands: Commands, player_query: Single<&Player
     }
 }
 
-pub fn display_score(mut score_query: Single<(&ScoreBoard, &mut Text2d)>,
+pub fn display_score(score_query: Single<(&ScoreBoard, &mut Text2d)>,
 ) {
     let (score, mut text) = score_query.into_inner();
     text.0 = score.0.to_string();

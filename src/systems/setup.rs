@@ -1,4 +1,4 @@
-use bevy::prelude::{Camera2d, Color, Commands, Res, Sprite, Text, Transform};
+use bevy::prelude::{Camera2d, Color, Commands, Res, Sprite, Transform};
 use bevy::asset::AssetServer;
 use bevy::math::{Quat, Vec3};
 use bevy::text::{Text2d, TextColor, TextFont};
