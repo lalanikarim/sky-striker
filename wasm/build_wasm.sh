@@ -5,4 +5,5 @@ wasm-bindgen --no-typescript --target web \
     --out-name "sky-striker" \
     ../target/wasm32-unknown-unknown/release/sky-striker.wasm
 cp -r ../assets ../out/web/
+cp index.html ../out/web/
 

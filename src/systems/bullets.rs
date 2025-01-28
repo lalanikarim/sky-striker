@@ -1,14 +1,18 @@
-use bevy::prelude::*;
-use bevy::asset::AssetServer;
 use crate::components::{Bullet, BulletState, BulletType, Enemy, Player, ScoreBoard};
-use crate::constants::{BULLET_VELOCITY, EXPLOSION_SPRITE_01_PATH, EXPLOSION_SPRITE_02_PATH, EXPLOSION_SPRITE_03_PATH, EXPLOSION_SPRITE_04_PATH};
+use crate::constants::{
+    BULLET_VELOCITY, EXPLOSION_SPRITE_01_PATH, EXPLOSION_SPRITE_02_PATH, EXPLOSION_SPRITE_03_PATH,
+    EXPLOSION_SPRITE_04_PATH,
+};
+use bevy::asset::AssetServer;
+use bevy::prelude::*;
 
 pub fn move_bullets(mut bullet_query: Query<(&mut Transform, &mut Bullet)>, time: Res<Time>) {
     for (mut position, mut bullet) in bullet_query.iter_mut() {
-        let moving = bullet.state == BulletState::Fired && match bullet.bullet_type {
-            BulletType::Player => position.translation.y <= bullet.reach.into(),
-            BulletType::Enemy => position.translation.y >= bullet.reach.into(),
-        };
+        let moving = bullet.state == BulletState::Fired
+            && match bullet.bullet_type {
+                BulletType::Player => position.translation.y <= bullet.reach.into(),
+                BulletType::Enemy => position.translation.y >= bullet.reach.into(),
+            };
         if moving {
             position.translation.y += BULLET_VELOCITY * bullet.direction() * time.delta_secs();
         } else {
@@ -53,12 +57,13 @@ pub fn animate_bullets(
     }
 }
 
-pub fn check_collisions(mut commands: Commands,
-                        mut bullet_query: Query<(&mut Bullet, &Transform)>,
-                        player_query: Single<(Entity, &Transform, &Sprite, &mut Player)>,
-                        mut enemy_query: Query<(Entity, &Transform, &Sprite), With<Enemy>>,
-                        score_query: Single<&mut ScoreBoard>,
-                        assets: Res<Assets<Image>>,
+pub fn check_collisions(
+    mut commands: Commands,
+    mut bullet_query: Query<(&mut Bullet, &Transform)>,
+    player_query: Single<(Entity, &Transform, &Sprite, &mut Player)>,
+    mut enemy_query: Query<(Entity, &Transform, &Sprite), With<Enemy>>,
+    score_query: Single<&mut ScoreBoard>,
+    assets: Res<Assets<Image>>,
 ) {
     let (player_entity, player_position, player_image, mut player) = player_query.into_inner();
     let player_box = get_bounding_box(player_position, player_image, &assets);
@@ -74,11 +79,11 @@ pub fn check_collisions(mut commands: Commands,
                             commands.entity(player_entity).despawn();
                         }
                     }
-                },
+                }
                 BulletType::Player => {
                     for (enemy_entity, enemy_position, enemy_sprite) in enemy_query.iter_mut() {
-                        let enemy_box = get_bounding_box(enemy_position,enemy_sprite, &assets);
-                        if collided(&transform.translation,&enemy_box){
+                        let enemy_box = get_bounding_box(enemy_position, enemy_sprite, &assets);
+                        if collided(&transform.translation, &enemy_box) {
                             bullet.state = BulletState::Igniting;
                             commands.entity(enemy_entity).despawn();
                             score.0 += 1;
@@ -90,12 +95,14 @@ pub fn check_collisions(mut commands: Commands,
     }
 }
 
-fn get_bounding_box(transform: &Transform, sprite: &Sprite,
-                    assets: &Res<Assets<Image>>,
-) -> Rect {
-    let image_dimensions = assets.get(&sprite.image).unwrap().size().as_vec2();
-    let scaled_image_dimensions = image_dimensions * transform.scale.truncate();
-    Rect::from_center_size(transform.translation.truncate(), scaled_image_dimensions)
+fn get_bounding_box(transform: &Transform, sprite: &Sprite, assets: &Res<Assets<Image>>) -> Rect {
+    if let Some(dimensions) = assets.get(&sprite.image) {
+        let image_dimensions = dimensions.size().as_vec2();
+        let scaled_image_dimensions = image_dimensions * transform.scale.truncate();
+        Rect::from_center_size(transform.translation.truncate(), scaled_image_dimensions)
+    } else {
+        Rect::new(0., 0., 0., 0.)
+    }
 }
 
 fn collided(bullet_position: &Vec3, bounding_rect: &Rect) -> bool {
